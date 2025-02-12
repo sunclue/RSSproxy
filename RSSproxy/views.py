@@ -1,10 +1,9 @@
-from flask import Flask, Response
+from flask import Response
 from feedgen.feed import FeedGenerator
 from bs4 import BeautifulSoup
 import requests
-import os
 
-app=Flask(__name__)
+from RSSproxy import app
 
 def generate_rss_for_github_trending():
     # 爬取页面
@@ -41,9 +40,13 @@ def generate_rss_for_github_trending():
 @app.route('/proxy/githubtrending')
 def proxy_github_trending():
     rss = generate_rss_for_github_trending()
-    return Response(rss, mimetype='application/rss_xml')
+    return Response(rss, mimetype='application/rss+xml')
 
 @app.route('/proxy/rss/<path:url>')
 def proxy_rss(url):
     response = requests.get(url)
     return Response(response.content, mimetype='application/xml')
+
+@app.route('/')
+def hello():
+    return 'hello'
