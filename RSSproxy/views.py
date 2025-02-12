@@ -18,7 +18,7 @@ def generate_rss_for_github_trending():
     soup = BeautifulSoup(response.text, 'html.parser')
     
     Box = soup.find('div', class_='Box')
-    entries = Box.find_all('div', class_='Box-row')
+    entries = Box.find_all('article', class_='Box-row')
     
     # 创建Feed
     fg = FeedGenerator()
