@@ -21,6 +21,7 @@ def generate_rss_for_github_trending():
     fg = FeedGenerator()
     fg.title('Github Trending Repositories')
     fg.link(href=target_url)
+    fg.description('Daily trending repositories on GitHub')
     
     for entry in entries:
         title = entry.find('h2').text
