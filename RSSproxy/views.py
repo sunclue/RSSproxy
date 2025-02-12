@@ -28,7 +28,7 @@ def generate_rss_for_github_trending():
     
     for entry in entries:
         title = entry.find('h2').text
-        link = entry.find('a')['href']
+        link = entry.find('h2').find('a')['href']
         content = entry.find('p').text
         
         fe = fg.add_entry()
