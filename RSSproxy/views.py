@@ -2,11 +2,12 @@ from flask import Flask, Response
 from feedgen.feed import FeedGenerator
 from bs4 import BeautifulSoup
 import requests
+import os
 
 app=Flask(__name__)
 
 def generate_rss_for_github_trending():
-    # 爬取页面
+    # 鐖彇椤甸潰
     target_url='https://github.com/trending'
     HEADERS = {
         'User-Agent'        : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:11.0) Gecko/20100101 Firefox/11.0',
@@ -20,7 +21,7 @@ def generate_rss_for_github_trending():
     Box = soup.find('div', class_='Box')
     entries = Box.find_all('div', class_='Box-row')
     
-    # 创建Feed
+    # 鍒涘缓Feed
     fg = FeedGenerator()
     fg.title('Github Trending Repositories')
     fg.link(href=target_url)
@@ -37,7 +38,7 @@ def generate_rss_for_github_trending():
     
     return fg.rss_str()
 
-@app.route('proxy/githubtrending')
+@app.route('/proxy/githubtrending')
 def proxy_github_trending():
     rss = generate_rss_for_github_trending()
     return Response(rss, mimetype='application/rss_xml')
