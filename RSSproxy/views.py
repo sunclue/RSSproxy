@@ -46,21 +46,18 @@ def proxy_github_trending():
 
 @app.route('/proxy/rss/<path:url>')
 def proxy_rss(url):
-    try:
-        HEADERS = {
-            'User-Agent'        : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept'            : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding'    : 'gzip,deflate,sdch',
-            'Accept-Language'    : 'zh-CN,zh;q=0.8'
-        }
-        response = requests.get(
-            url,
-            headers=HEADERS,
-            verify=certifi.where()      # 使用certifi的CA证书
-            )
-        return Response(response.content, mimetype='application/xml')
-    except requests.exceptions.RequestException as e:
-        return f"Error fetching RSS feed: {str(e)}", 500
+    HEADERS = {
+        'User-Agent'        : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept'            : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Encoding'    : 'gzip,deflate,sdch',
+        'Accept-Language'    : 'zh-CN,zh;q=0.8'
+    }
+    response = requests.get(
+        url,
+        headers=HEADERS,
+        verify=certifi.where()      # 使用certifi的CA证书
+        )
+    return Response(response.content, mimetype='application/xml')
 
 @app.route('/')
 def hello():
