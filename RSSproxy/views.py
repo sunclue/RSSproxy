@@ -63,6 +63,10 @@ def proxy_rss(url):
         response = requests.get(
             decoded_url,
             headers=HEADERS,
+            proxies={
+                'http':'',
+                'https':''
+            },
             verify=certifi.where(),      # 使用certifi的CA证书
             timeout=10
             )
